@@ -18,7 +18,7 @@ apply plugin: 'kotlin'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+    maven {url "http://mvnrepo.alibaba-inc.com/mvn/repository"}
 }
 
 dependencies {

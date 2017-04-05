@@ -13,5 +13,9 @@ public class MainTest {
         Teacher wangchen = new Teacher("wangchen", 30);
         System.out.println(wangchen.getName());
         System.out.println(wangchen.getAge());
+
+        //调用扩展的方法
+        char kotlin = FunctionCallKtt.lastChar("kotlin");
+        System.out.println(kotlin);
     }
 }

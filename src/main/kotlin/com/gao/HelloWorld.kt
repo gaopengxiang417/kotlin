@@ -16,6 +16,8 @@ fun main(args: Array<String>) {
     println("hello, ${name}")
     println("hello, ${if (true) "bigger" else "smaller"}")
 
+    //调用另外的函数逻辑
+    println("kotlin".lastChar())
 }
 
 /**

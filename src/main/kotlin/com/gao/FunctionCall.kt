@@ -2,6 +2,8 @@
 @file:JvmName("FunctionCallKtt")
 package com.gao
 
+import java.io.File
+
 /**
  * User: wangchen
  * Date: 2017/4/4
@@ -45,7 +47,48 @@ fun main(args: Array<String>) {
     view.click()
 
     view.showOff()
+
+    val (number, name) = 1 to "name"
+
+    println("$number, $name")
+
+    //字符串的分割
+    println("12.345-6.A".split("."))
+    println("12.345-6.A".split("\\.|-".toRegex()))
+
+
+    parsePath("/Users/yole/kotlin-book/chapter.adoc")
+    parsePathRegrex("/Users/yole/kotlin-book/chapter.adoc")
 }
+
+/**
+ * 用正则表达式解析数据
+ */
+fun parsePathRegrex(path: String) {
+    var regex = """(.+)/(.+)\.(.+)""".toRegex()
+    val matchEntire = regex.matchEntire(path)
+    if (matchEntire != null) {
+        var (dir, name, extend) = matchEntire.destructured
+        println("dir: $dir, filename: $name, extension: $extend")
+    }
+}
+
+/**
+ * 解析字符串
+ */
+fun parsePath(path: String) {
+    val dir = path.substringBeforeLast(File.separator)
+    val fullName = path.substringAfterLast(File.separator)
+
+    val fileName = fullName.substringBeforeLast(".")
+    val extension = fullName.substringAfterLast(".")
+
+    println("dir: $dir, filename: $fileName, extension: $extension")
+}
+
+//标识一个函数的类型
+infix fun Any.to(other: Any) = Pair(this, other)
+
 
 /**
  * 进行字符串的聚合

@@ -1,5 +1,5 @@
-
 @file:JvmName("FunctionCallKtt")
+
 package com.gao
 
 import java.io.File
@@ -43,7 +43,7 @@ fun main(args: Array<String>) {
 
     println(list.joinToStringW(":"))
 
-    val view : View = Button()
+    val view: View = Button()
     view.click()
 
     view.showOff()
@@ -59,6 +59,46 @@ fun main(args: Array<String>) {
 
     parsePath("/Users/yole/kotlin-book/chapter.adoc")
     parsePathRegrex("/Users/yole/kotlin-book/chapter.adoc")
+
+    saveUser(User(1, "2", "3"))
+
+    saveUserOne(User(1, "", ""))
+
+    User(1, "", "").validate()
+}
+
+class User(val id: Int, val name: String, val address: String)
+
+//可以直接定义为类的扩展方法
+fun User.validate() {
+    fun validate(value: String, fieldName: String) {
+        if (value.isEmpty()) {
+            println("${fieldName} is empty")
+        }
+    }
+    validate(name, "Name")
+    validate(address, "address")
+}
+
+//函数里面嵌套函数
+fun saveUserOne(user: User) {
+    fun validate(user: User, value: String, fieldName: String) {
+        if (value.isEmpty()) {
+            println("${user} is ${fieldName} is empty")
+        }
+    }
+    validate(user, user.name, "Name")
+    validate(user, user.address, "address")
+}
+
+fun saveUser(user: User) {
+
+    if (user.name.isEmpty()) {
+        throw IllegalArgumentException("can not save user ${user}")
+    }
+    if (user.address.isEmpty()) {
+        throw IllegalArgumentException("can not save user, empty address")
+    }
 }
 
 /**
@@ -95,7 +135,7 @@ infix fun Any.to(other: Any) = Pair(this, other)
  * 默认参数值
  */
 fun <T> joinToString(collection: Collection<T>,
-                     sepator: String = ",", prefix: String = "", suffix: String = "") : String {
+                     sepator: String = ",", prefix: String = "", suffix: String = ""): String {
     val sb = StringBuffer(prefix)
     for ((index, element) in collection.withIndex()) {
         if (index > 0) {
@@ -109,7 +149,7 @@ fun <T> joinToString(collection: Collection<T>,
 }
 
 //在已有的类基础之上扩展
-fun String.lastChar() : Char = get(length - 1)
+fun String.lastChar(): Char = get(length - 1)
 
 //最终扩展函数
 fun <T> Collection<T>.joinToStringW(sepator: String = ",", prefix: String = "", suffix: String = ""): String {

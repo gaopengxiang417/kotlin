@@ -18,7 +18,95 @@ fun main(args: Array<String>) {
     richButton.animate()
     richButton.disable()
     richButton.click()
+
+    //类实例的创建
+    println(UserOne("first"))
+    println(UserTow("second"))
+    println(UserThree("second", false))
+
+    println(PrivateUser("wangchen@ttt.com").nickName)
+    println(SubscribingUser("wangchen@email.com").nickName)
+
+    val userTen = UserTen("ailce")
+    userTen.address = "i am wangchen"
+
+    val lengthCounter = LengthCounter()
+    lengthCounter.addWord("hahha")
 }
+
+//方法访问可见性，可以不对外提供set方法访问权限
+class LengthCounter {
+
+    var counter : Int = 0
+    private set
+
+    fun addWord(word: String) {
+        counter += word.length
+    }
+}
+
+class UserTen(val name: String){
+    var address: String = "unspecified"
+        set(value: String) {
+            println("addess was changed for $name: $field -> $value")
+            field = value
+        }
+}
+
+//接口中定义属性
+interface UserSecond {
+    val nickName : String
+}
+
+//覆盖父类的属性
+class PrivateUser(override val nickName: String) : UserSecond
+
+class SubscribingUser(val email: String) : UserSecond {
+    override val nickName: String
+        get() = email.substringBefore('@')
+}
+
+//二级构造器的定义
+open class ViewFirst {
+
+    constructor(ctx : Int)
+    constructor(ctx : Int, attr: String)
+}
+
+//子类继承父类
+class ButtonFirst : ViewFirst {
+    constructor(ctx: Int) : super(ctx)
+    constructor(ctx: Int, attr: String) : super(ctx, attr)
+}
+
+//类继承以后对于父类的构造器使用
+open class UserFive(val name: String)
+class SonUser(name: String) : UserFive(name)
+
+//该类使用默认构造器
+open class ButtonThree
+
+//没有提供任何构造器，必须调用父类的构造器
+class RadioButton : ButtonThree()
+
+
+//类的声明中添加默认参数
+data class UserThree(val name: String, val substrbed : Boolean = true)
+
+
+//在kotlin中一个标准的构造器如下
+data class UserOne constructor(val _name: String){
+    val name : String
+    init {
+        name = _name
+    }
+}
+
+//更进一步声明一个类
+data class UserTow constructor(val _name : String){
+    val name = _name
+}
+
 
 //定义一个接口
 interface Clickable {
